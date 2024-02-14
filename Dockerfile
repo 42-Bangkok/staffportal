@@ -1,5 +1,4 @@
 FROM node:20-slim as deps
-
 WORKDIR /app
 COPY app/package*.json .
 RUN npm install
@@ -13,6 +12,7 @@ RUN rm -rf "app/(sample)"
 RUN npm run build
 
 FROM node:20-slim as runner
+ENV NODE_ENV=production
 WORKDIR /app
 COPY app/next.config.mjs .
 COPY --from=builder /app/.next ./.next
