@@ -10,7 +10,7 @@ const SIDEBAR_ITEMS = [
   },
   {
     title: "Cadet",
-    href: "/cadet",
+    href: "/dashboard/cadet",
   },
   {
     title: "Snappy",
@@ -28,7 +28,7 @@ export default async function DashboardLayout({
   const session = await auth();
   return (
     <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-      <aside className="-mx-4 lg:w-1/5">
+      <aside className="-mx-4 min-h-dvh bg-slate-100">
         <div className="flex flex-col items-center justify-center p-4 gap-4">
           <Image
             src="/42bangkok-logo-right.svg"
@@ -38,9 +38,9 @@ export default async function DashboardLayout({
           />
           Hi, {session!.user.login}
         </div>
-        <SidebarNav items={SIDEBAR_ITEMS} />
+        <SidebarNav items={SIDEBAR_ITEMS} className="pr-2" />
       </aside>
-      <div className="flex-1 lg:max-w-2xl">{children}</div>
+      <div className="flex-1">{children}</div>
     </div>
   );
 }
