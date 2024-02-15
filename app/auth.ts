@@ -4,9 +4,6 @@
  */
 import NextAuth from "next-auth";
 import FortyTwoProvider from "next-auth/providers/42-school";
-// import { DrizzleAdapter } from "@auth/drizzle-adapter";
-// import { db } from "@/lib/db/db";
-// import { profiles } from "./drizzle/schemas/accounts/profiles";
 
 export const {
   handlers: { GET, POST },
@@ -18,23 +15,22 @@ export const {
       clientSecret: process.env.AUTH_42_SCHOOL_CLIENT_SECRET
     })
   ],
-  // callbacks: {
-  //   async session({ session, user }) {
-  //     session.user.id = user.id;
-  //     return session;
-  //   }
-  // },
-  // events: {
-  //   async linkAccount({ user }) {
-  //     // Create a profile for the user if it doesn't exist
-  //     if (user) {
-  //       await db
-  //         .insert(profiles)
-  //         .values({
-  //           userId: user.id
-  //         })
-  //         .onConflictDoNothing();
-  //     }
-  //   }
-  // }
+  callbacks: {
+    async jwt({ token, user, profile, trigger }) {
+      if (user && profile && trigger === "signIn") {
+        token.user = {
+          isStaff: profile["staff?"] || false,
+          login: profile.login
+        };
+      }
+      return token;
+    },
+    async session({ session, token, trigger }) {
+      if (token) {
+        session.user.isStaff = token.user.isStaff;
+        session.user.login = token.user.login;
+      }
+      return session;
+    }
+  },
 });
