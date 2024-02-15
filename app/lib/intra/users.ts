@@ -13,7 +13,10 @@ export async function fetchUser({ login }: { login: string }) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    next: { revalidate: 0 },
+    next: {
+      revalidate: 30,
+      tags: [login],
+    },
   });
   if (!r.ok) {
     throw new Error("Failed to fetch user");
@@ -54,7 +57,6 @@ export async function transactions({
       transactable_type,
       reason,
     }),
-    next: { revalidate: 0 },
   });
   if (!r.ok) {
     throw new Error("Failed to create transaction");
