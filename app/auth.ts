@@ -9,6 +9,7 @@ export const {
   handlers: { GET, POST },
   auth,
 } = NextAuth({
+  trustHost: true,
   providers: [
     FortyTwoProvider({
       clientId: process.env.AUTH_42_SCHOOL_CLIENT_ID,
