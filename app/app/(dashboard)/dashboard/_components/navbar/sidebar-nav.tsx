@@ -3,10 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import { AuthBtn } from "@/components/btns/auth-btn";
-import { Separator } from "@/components/ui/separator";
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
@@ -43,7 +41,11 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
         </Link>
       ))}
       <div className="flex p-1"></div>
-      <AuthBtn callbackUrl="/" />
+      <Link href={"/auth/sign-in"}>
+        <Button variant="destructive" className="w-full">
+          Sign Out
+        </Button>
+      </Link>
     </nav>
   );
 }
