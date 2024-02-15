@@ -8,7 +8,7 @@ import { useState } from "react";
 export const SearchInput = () => {
   const [search, setSearch] = useState("");
   const router = useRouter();
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     if (search) {
       router.push(`/dashboard/cadet/${search}`);
