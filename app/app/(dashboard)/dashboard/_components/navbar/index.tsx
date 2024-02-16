@@ -27,7 +27,7 @@ export default async function DashboardLayout({
 }: SettingsLayoutProps) {
   const session = await auth();
   return (
-    <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+    <div className="flex  flex-row space-x-12 space-y-0">
       <aside className="-mx-4 min-h-dvh bg-slate-100">
         <div className="flex flex-col items-center justify-center p-4 gap-4">
           <Image
