@@ -52,10 +52,13 @@ export async function transactions({
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      value,
-      user_id,
-      transactable_type,
-      reason,
+      transaction: {
+        value: value,
+        user_id: user_id,
+        transactable_type: transactable_type,
+        reason: reason,
+      },
+      force: true,
     }),
   });
   if (!r.ok) {
