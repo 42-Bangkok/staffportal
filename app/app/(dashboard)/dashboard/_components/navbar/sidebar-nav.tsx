@@ -26,12 +26,12 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
           key={item.href}
           href={item.href}
           className={cn(
-            "block w-full px-4 py-2 text-sm font-medium rounded-md",
+            "block w-full px-4 py-2 text-sm font-medium",
             buttonVariants({ variant: "outline" }),
             pathname === item.href
               ? "bg-muted hover:bg-muted"
               : "hover:bg-transparent hover:font-bold",
-            "justify-start"
+            "justify-start rounded-none"
           )}
         >
           <div className="pl-4">{item.title}</div>
@@ -39,7 +39,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
       ))}
       <div className="flex p-1"></div>
       <Link href={"/auth/sign-in"}>
-        <Button variant="destructive" className="w-full">
+        <Button variant="destructive" className="w-full rounded-none">
           Sign Out
         </Button>
       </Link>
