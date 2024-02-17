@@ -12,7 +12,7 @@ export const JsonData = ({ data }: { data: object }) => {
     <Collapsible>
       <CollapsibleTrigger
         className={cn(
-          "flex items-center",
+          "flex items-center w-24",
           buttonVariants({ variant: "ghost" })
         )}
       >

@@ -2,6 +2,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fetchUser } from "@/lib/intra/users";
 import { JsonData } from "./_components/json-data";
 import { WalletForm } from "./_components/wallet-form";
+import { Separator } from "@/components/ui/separator";
+import { CircleUserIcon, MailIcon, UserIcon } from "lucide-react";
 
 export default async function Page({ params }: { params: { login: string } }) {
   const { login } = params;
@@ -18,6 +20,7 @@ export default async function Page({ params }: { params: { login: string } }) {
   };
   return (
     <main>
+      <Separator className="m-4" />
       <div className="flex gap-4">
         <div>
           <Avatar className="w-24 h-24 rounded">
@@ -28,13 +31,25 @@ export default async function Page({ params }: { params: { login: string } }) {
           </Avatar>
         </div>
         <div>
-          <h2>{user.login}</h2>
-          <p>{user.displayname}</p>
-          <p>{user.email}</p>
-          <p>{user.wallet} $Alt</p>
+          <div className="flex items-center gap-1">
+            <UserIcon size={16} />
+            <p>{user.login}</p>
+          </div>
+          <div className="flex items-center gap-1">
+            <CircleUserIcon size={16} />
+            <p>{user.displayname}</p>
+          </div>
+          <div className="flex items-center gap-1">
+            <MailIcon size={16} />
+            <p>{user.email}</p>
+          </div>
         </div>
       </div>
-      <WalletForm {...walletFormProps} />
+      <Separator className="m-4" />
+      <div className="flex flex-col gap-4">
+        <WalletForm {...walletFormProps} />
+      </div>
+      <Separator className="m-4" />
       <JsonData data={user} />
     </main>
   );

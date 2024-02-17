@@ -65,16 +65,16 @@ export function WalletForm(props: IWalletForm) {
           name="value"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Add or remove $Alt</FormLabel>
+              <FormLabel>Add, or remove $Alt</FormLabel>
               <div className="flex">
                 <Input
-                  className="rounded-r-none"
-                  value={`${currentValue} $Alt`}
+                  className="rounded-r-none min-w-[100px]"
+                  value={`$Alt ${currentValue}`}
                   readOnly
                 />
                 <FormControl>
                   <Input
-                    className="rounded-none"
+                    className="rounded-none min-w-[100px]"
                     type="number"
                     step={100}
                     {...field}
