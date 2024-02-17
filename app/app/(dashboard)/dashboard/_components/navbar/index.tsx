@@ -14,7 +14,7 @@ const SIDEBAR_ITEMS = [
   },
   {
     title: "Snappy",
-    href: "/snappy",
+    href: "/dashboard/snappy",
   },
 ];
 
