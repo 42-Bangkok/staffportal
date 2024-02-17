@@ -4,7 +4,7 @@ import { LockClosedIcon } from "@radix-ui/react-icons";
 
 export default function Page() {
   return (
-    <main className="flex items-center justify-center h-screen p-4">
+    <main className="flex items-center justify-center h-screen p-4 w-full">
       <div className="h-3/4">
         <Alert variant={"destructive"}>
           <LockClosedIcon className="w-4 h-4" />
