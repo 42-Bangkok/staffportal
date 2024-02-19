@@ -21,8 +21,8 @@ const SIDEBAR_ITEMS = [
 export default async function Navbar() {
   const session = await auth();
   return (
-    <div className="flex flex-row space-x-12 space-y-0 mr-4">
-      <aside className="-mx-4 min-h-dvh bg-slate-100">
+    <div className="flex flex-row space-x-12 space-y-0">
+      <aside className="min-h-dvh bg-slate-100">
         <div className="flex flex-col items-center justify-center p-4 gap-4">
           <Image
             src="/42bangkok-logo-right.svg"

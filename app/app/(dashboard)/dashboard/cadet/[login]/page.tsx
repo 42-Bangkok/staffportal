@@ -20,7 +20,6 @@ export default async function Page({ params }: { params: { login: string } }) {
   };
   return (
     <main>
-      <Separator className="m-4" />
       <div className="flex gap-4">
         <div>
           <Avatar className="w-24 h-24 rounded">
@@ -45,11 +44,11 @@ export default async function Page({ params }: { params: { login: string } }) {
           </div>
         </div>
       </div>
-      <Separator className="m-4" />
+      <Separator className="mt-2 mb-2 w-2/3" />
       <div className="flex flex-col gap-4">
         <WalletForm {...walletFormProps} />
       </div>
-      <Separator className="m-4" />
+      <Separator className="m-2 mb-2 w-2/3" />
       <JsonData data={user} />
     </main>
   );
