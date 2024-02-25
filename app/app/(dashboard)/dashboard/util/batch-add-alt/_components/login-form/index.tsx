@@ -18,9 +18,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { ILoginsForm } from "./types";
 import { useBatchAddAltStore } from "../../stores";
+import { Input } from "@/components/ui/input";
+import { batchAddAlt } from "./actions";
 
 const FormSchema = z.object({
   logins: z.string(),
+  value: z.coerce.number().int(),
 });
 
 export const LoginsForm = (props: ILoginsForm) => {
@@ -28,7 +31,7 @@ export const LoginsForm = (props: ILoginsForm) => {
   const { errLogins, ids, clear } = useBatchAddAltStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { logins: props.logins },
+    defaultValues: { logins: props.logins, value: 0 },
   });
 
   function onCheckUsers(data: z.infer<typeof FormSchema>) {
@@ -37,8 +40,10 @@ export const LoginsForm = (props: ILoginsForm) => {
     router.push(`/dashboard/util/batch-add-alt/?logins=${logins.join(",")}`);
   }
   async function onCommit() {
-    console.log("ids", ids);
-    // console.log("value", props.value);
+    const { data, error } = await batchAddAlt({
+      ids: ids,
+      value: Number(form.getValues("value")),
+    });
   }
 
   return (
@@ -65,6 +70,24 @@ export const LoginsForm = (props: ILoginsForm) => {
                   Separate multiple logins with a space. Duplicated logins are
                   automatically cleared.
                 </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="value"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Add, or remove $Alt</FormLabel>
+                <FormControl>
+                  <Input
+                    className="rounded-none w-[100px]"
+                    type="number"
+                    step={50}
+                    {...field}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
