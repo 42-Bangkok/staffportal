@@ -25,7 +25,7 @@ const FormSchema = z.object({
 
 export const LoginsForm = (props: ILoginsForm) => {
   const router = useRouter();
-  const [errLogins] = useBatchAddAltStore((state) => [state.errLogins]);
+  const { errLogins, clear } = useBatchAddAltStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { logins: props.logins },
@@ -33,6 +33,7 @@ export const LoginsForm = (props: ILoginsForm) => {
 
   function onCheckUsers(data: z.infer<typeof FormSchema>) {
     const logins = data["logins"].split(" ").filter(Boolean);
+    clear();
     router.push(`/dashboard/util/batch-add-alt/?logins=${logins.join(",")}`);
   }
 
