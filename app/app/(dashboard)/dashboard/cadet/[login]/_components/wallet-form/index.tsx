@@ -76,7 +76,7 @@ export function WalletForm(props: IWalletForm) {
                   <Input
                     className="rounded-none min-w-[100px]"
                     type="number"
-                    step={100}
+                    step={50}
                     {...field}
                   />
                 </FormControl>
