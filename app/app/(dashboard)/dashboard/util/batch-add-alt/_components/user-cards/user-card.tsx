@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { fetchUser } from "@/lib/intra/users";
-import { AddErrloginHandler } from "./state-handlers";
+import { AddErrloginHandler, AddIdHandler } from "./state-handlers";
 
 export const UserCard = async ({ login }: { login: string }) => {
   let user = null;
@@ -25,19 +25,22 @@ export const UserCard = async ({ login }: { login: string }) => {
     );
   }
   return (
-    <Card className="w-3/4">
-      <CardContent className="p-2">
-        <div className="flex gap-4 items-center">
-          <Avatar>
-            <AvatarImage src={user.image.link} />
-          </Avatar>
-          <div>
-            <div>{user.login}</div>
-            <div>Wallet: {user.wallet}</div>
+    <>
+      <Card className="w-3/4">
+        <CardContent className="p-2">
+          <div className="flex gap-4 items-center">
+            <Avatar>
+              <AvatarImage src={user.image.link} />
+            </Avatar>
+            <div>
+              <div>{user.login}</div>
+              <div>Wallet: {user.wallet}</div>
+            </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+      <AddIdHandler {...{ id: user.id.toString() }} />
+    </>
   );
 };
 

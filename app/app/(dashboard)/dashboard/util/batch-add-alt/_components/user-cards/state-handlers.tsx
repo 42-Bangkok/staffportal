@@ -10,3 +10,10 @@ export const AddErrloginHandler = ({ login }: { login: string }) => {
   });
   return null;
 };
+
+export const AddIdHandler = ({ id }: { id: string }) => {
+  useBatchAddAltStore.setState({
+    ids: [...new Set([...useBatchAddAltStore.getState().ids, id])],
+  });
+  return null;
+};

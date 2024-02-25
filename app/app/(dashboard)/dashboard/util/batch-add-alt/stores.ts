@@ -4,19 +4,20 @@ import { create } from "zustand";
 
 interface State {
   errLogins: string[];
+  ids: string[];
 }
 
 interface Action {
-  addErrLogin: (logins: string) => void;
   clear: () => void;
 }
 
 export const useBatchAddAltStore = create<State & Action>((set) => ({
   errLogins: [],
-  addErrLogin: (login) => {
-    set((state) => ({ errLogins: [...state.errLogins, login] }));
-  },
+  ids: [],
   clear: () => {
-    set({ errLogins: [] });
+    set({
+      errLogins: [],
+      ids: [],
+    });
   },
 }));

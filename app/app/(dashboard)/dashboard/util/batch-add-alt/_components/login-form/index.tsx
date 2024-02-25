@@ -25,15 +25,15 @@ const FormSchema = z.object({
 
 export const LoginsForm = (props: ILoginsForm) => {
   const router = useRouter();
-  const { errLogins, clear } = useBatchAddAltStore();
+  const { errLogins, ids, clear } = useBatchAddAltStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { logins: props.logins },
   });
 
   function onCheckUsers(data: z.infer<typeof FormSchema>) {
-    const logins = data["logins"].split(" ").filter(Boolean);
     clear();
+    const logins = [...new Set(data["logins"].split(" ").filter(Boolean))];
     router.push(`/dashboard/util/batch-add-alt/?logins=${logins.join(",")}`);
   }
 
@@ -57,19 +57,25 @@ export const LoginsForm = (props: ILoginsForm) => {
                 />
               </FormControl>
               <FormDescription>
-                Separate multiple logins with a space.
+                Separate multiple logins with a space. Duplicated logins are
+                automatically cleared.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
         <div className="flex flex-col gap-2">
-          {errLogins.length > 0 ? (
-            <p className="text-red-500">
-              logins &quot;{errLogins.join(", ")}&quot; appears invalid, please
-              remove to commit.
+          <div>
+            <p>
+              DEBUG: the following ids will be used to commit: {ids.join(", ")}
             </p>
-          ) : null}
+            {errLogins.length > 0 ? (
+              <p className="text-red-500">
+                logins &quot;{errLogins.join(", ")}&quot; appears invalid,
+                please remove to commit.
+              </p>
+            ) : null}
+          </div>
           <div className="flex gap-2">
             <Button type="submit">Check users</Button>
             <Button
