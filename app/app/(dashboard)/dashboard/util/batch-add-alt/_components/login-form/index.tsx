@@ -17,6 +17,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { ILoginsForm } from "./types";
+import { useBatchAddAltStore } from "../../stores";
 
 const FormSchema = z.object({
   logins: z.string(),
@@ -24,6 +25,7 @@ const FormSchema = z.object({
 
 export const LoginsForm = (props: ILoginsForm) => {
   const router = useRouter();
+  const [errLogins] = useBatchAddAltStore((state) => [state.errLogins]);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { logins: props.logins },
@@ -60,11 +62,23 @@ export const LoginsForm = (props: ILoginsForm) => {
             </FormItem>
           )}
         />
-        <div className="flex gap-2">
-          <Button type="submit">Check users</Button>
-          <Button variant="destructive" type="submit" disabled>
-            Commit
-          </Button>
+        <div className="flex flex-col gap-2">
+          {errLogins.length > 0 ? (
+            <p className="text-red-500">
+              logins &quot;{errLogins.join(", ")}&quot; appears invalid, please
+              remove to commit.
+            </p>
+          ) : null}
+          <div className="flex gap-2">
+            <Button type="submit">Check users</Button>
+            <Button
+              variant="destructive"
+              type="submit"
+              disabled={form.formState.isSubmitting || errLogins.length > 0}
+            >
+              Commit
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

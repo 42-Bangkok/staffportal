@@ -1,6 +1,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { fetchUser } from "@/lib/intra/users";
+import { AddErrloginHandler } from "./state-handlers";
 
 export const UserCard = async ({ login }: { login: string }) => {
   let user = null;
@@ -8,16 +9,19 @@ export const UserCard = async ({ login }: { login: string }) => {
     user = await fetchUser({ login });
   } catch (error: any) {
     return (
-      <Card className="w-3/4 bg-red-300">
-        <CardContent className="p-2">
-          <div className="flex gap-4 items-center">
-            <Avatar>
-              <AvatarImage src={""} />
-            </Avatar>
-            <div>{error.message}</div>
-          </div>
-        </CardContent>
-      </Card>
+      <>
+        <Card className="w-3/4 bg-red-300">
+          <CardContent className="p-2">
+            <div className="flex gap-4 items-center">
+              <Avatar>
+                <AvatarImage src={""} />
+              </Avatar>
+              <div>{error.message}</div>
+            </div>
+          </CardContent>
+        </Card>
+        <AddErrloginHandler {...{ login }} />
+      </>
     );
   }
   return (
