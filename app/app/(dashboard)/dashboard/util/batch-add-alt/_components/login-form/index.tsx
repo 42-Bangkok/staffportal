@@ -28,13 +28,17 @@ const FormSchema = z.object({
 
 export const LoginsForm = (props: ILoginsForm) => {
   const router = useRouter();
-  const { errLogins, ids, clear } = useBatchAddAltStore();
+  const { errLogins, ids, clear, isChecking, isCommitting } =
+    useBatchAddAltStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { logins: props.logins, value: 0 },
   });
 
   function onCheckUsers(data: z.infer<typeof FormSchema>) {
+    if (props.logins === data["logins"]) {
+      return;
+    }
     clear();
     const logins = [...new Set(data["logins"].split(" ").filter(Boolean))];
     router.push(`/dashboard/util/batch-add-alt/?logins=${logins.join(",")}`);
@@ -106,7 +110,7 @@ export const LoginsForm = (props: ILoginsForm) => {
               ) : null}
             </div>
             <div className="flex gap-2">
-              <Button className="w-32" type="submit">
+              <Button className="w-32" type="submit" disabled={isChecking}>
                 Check users
               </Button>
             </div>
@@ -117,7 +121,9 @@ export const LoginsForm = (props: ILoginsForm) => {
         className="w-32"
         variant="destructive"
         type="submit"
-        // disabled={form.formState.isSubmitting || errLogins.length > 0}
+        // disabled={
+        //   form.formState.isSubmitting || errLogins.length > 0 || isCommitting
+        // }
         onClick={onCommit}
       >
         Commit
