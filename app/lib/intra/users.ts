@@ -19,7 +19,10 @@ export async function fetchUser({ login }: { login: string }) {
     },
   });
   if (!r.ok) {
-    throw new Error("Failed to fetch user");
+    if (r.status === 404) {
+      throw new Error(`Login ${login} not found`);
+    }
+    throw new Error(`Failed to fetch Login ${login}`);
   }
   return r.json();
 }
