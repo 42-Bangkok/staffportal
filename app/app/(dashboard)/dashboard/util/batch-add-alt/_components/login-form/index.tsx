@@ -31,8 +31,7 @@ const FormSchema = z.object({
 export const LoginsForm = (props: ILoginsForm) => {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
-  const { errLogins, users, clear, isChecking, isCommitting } =
-    useBatchAddAltStore();
+  const { errLogins, users, clear } = useBatchAddAltStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { logins: props.logins, value: 0 },
@@ -67,7 +66,9 @@ export const LoginsForm = (props: ILoginsForm) => {
     }
     setIsPending(false);
   }
-
+  const isChecking =
+    users.length !==
+    [...new Set(props["logins"].split(" ").filter(Boolean))].length;
   return (
     <Form {...form}>
       <form
@@ -115,10 +116,6 @@ export const LoginsForm = (props: ILoginsForm) => {
         />
         <div className="flex flex-col gap-2">
           <div>
-            <p>
-              DEBUG: the following ids will be used to commit:{" "}
-              {JSON.stringify(users)}
-            </p>
             {errLogins.length > 0 ? (
               <p className="text-red-500">
                 logins &quot;{errLogins.join(", ")}&quot; appears invalid,
@@ -127,20 +124,19 @@ export const LoginsForm = (props: ILoginsForm) => {
             ) : null}
           </div>
           <div className="flex gap-2">
-            <Button
-              className="w-32"
-              type="submit"
-              disabled={isChecking || isPending}
-            >
+            <Button className="w-32" type="submit" disabled={isPending}>
               Check users
             </Button>
             <Button
               className="w-32"
               variant="destructive"
               type="button"
-              // disabled={
-              //   form.formState.isSubmitting || errLogins.length > 0 || isCommitting
-              // }
+              disabled={
+                form.formState.isSubmitting ||
+                errLogins.length > 0 ||
+                isPending ||
+                isChecking
+              }
               onClick={onCommit}
             >
               Commit

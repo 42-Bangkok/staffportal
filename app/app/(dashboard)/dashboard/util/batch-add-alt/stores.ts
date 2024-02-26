@@ -10,8 +10,6 @@ export interface User {
 interface State {
   errLogins: string[];
   users: User[];
-  isChecking: boolean;
-  isCommitting: boolean;
 }
 
 interface Action {
