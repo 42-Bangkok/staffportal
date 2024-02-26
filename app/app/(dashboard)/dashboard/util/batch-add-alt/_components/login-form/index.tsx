@@ -73,7 +73,7 @@ export const LoginsForm = (props: ILoginsForm) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onCheckUsers)}
-        className="w-3/4 space-y-6"
+        className="w-3/4 space-y-2"
       >
         <FormField
           control={form.control}

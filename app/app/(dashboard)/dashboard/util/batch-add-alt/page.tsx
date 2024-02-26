@@ -13,6 +13,7 @@ export default function Page({
       <TypographyH1>Batch Add $Alt</TypographyH1>
       <div className="flex flex-col gap-4">
         <LoginsForm {...{ logins: logins.join(" ") }} />
+        $Alt will be added to the following users.
         <UserCards {...{ logins }} />
       </div>
     </main>
