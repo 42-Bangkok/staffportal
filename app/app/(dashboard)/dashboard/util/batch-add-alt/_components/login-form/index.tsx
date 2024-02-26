@@ -44,90 +44,88 @@ export const LoginsForm = (props: ILoginsForm) => {
     router.push(`/dashboard/util/batch-add-alt/?logins=${logins.join(",")}`);
   }
   async function onCommit() {
-    const { data, error } = await batchAddAlt({
-      ids: ids,
-      value: Number(form.getValues("value")),
-    });
+    console.log("Commited");
+    // const { data, error } = await batchAddAlt({
+    //   ids: ids,
+    //   value: Number(form.getValues("value")),
+    // });
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onCheckUsers)}
-          className="w-3/4 space-y-6"
-        >
-          <FormField
-            control={form.control}
-            name="logins"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Logins</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="lpumidol aoudin"
-                    className="resize-none"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Separate multiple logins with a space. Duplicated logins are
-                  automatically cleared.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="value"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Add, or remove $Alt</FormLabel>
-                <FormControl>
-                  <Input
-                    className="rounded-none w-[100px]"
-                    type="number"
-                    step={50}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex flex-col gap-2">
-            <div>
-              <p>
-                DEBUG: the following ids will be used to commit:{" "}
-                {ids.join(", ")}
-              </p>
-              {errLogins.length > 0 ? (
-                <p className="text-red-500">
-                  logins &quot;{errLogins.join(", ")}&quot; appears invalid,
-                  please remove to commit.
-                </p>
-              ) : null}
-            </div>
-            <div className="flex gap-2">
-              <Button className="w-32" type="submit" disabled={isChecking}>
-                Check users
-              </Button>
-            </div>
-          </div>
-        </form>
-      </Form>
-      <Button
-        className="w-32"
-        variant="destructive"
-        type="submit"
-        // disabled={
-        //   form.formState.isSubmitting || errLogins.length > 0 || isCommitting
-        // }
-        onClick={onCommit}
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onCheckUsers)}
+        className="w-3/4 space-y-6"
       >
-        Commit
-      </Button>
-    </div>
+        <FormField
+          control={form.control}
+          name="logins"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Logins</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="lpumidol aoudin"
+                  className="resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                Separate multiple logins with a space. Duplicated logins are
+                automatically cleared.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="value"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Add, or remove $Alt</FormLabel>
+              <FormControl>
+                <Input
+                  className="rounded-none w-[100px]"
+                  type="number"
+                  step={50}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex flex-col gap-2">
+          <div>
+            <p>
+              DEBUG: the following ids will be used to commit: {ids.join(", ")}
+            </p>
+            {errLogins.length > 0 ? (
+              <p className="text-red-500">
+                logins &quot;{errLogins.join(", ")}&quot; appears invalid,
+                please remove to commit.
+              </p>
+            ) : null}
+          </div>
+          <div className="flex gap-2">
+            <Button className="w-32" type="submit" disabled={isChecking}>
+              Check users
+            </Button>
+            <Button
+              className="w-32"
+              variant="destructive"
+              type="button"
+              // disabled={
+              //   form.formState.isSubmitting || errLogins.length > 0 || isCommitting
+              // }
+              onClick={onCommit}
+            >
+              Commit
+            </Button>
+          </div>
+        </div>
+      </form>
+    </Form>
   );
 };
