@@ -16,6 +16,10 @@ const SIDEBAR_ITEMS = [
     title: "Snappy",
     href: "/dashboard/snappy",
   },
+  {
+    title: "Utils",
+    href: "/dashboard/util",
+  },
 ];
 
 export default async function Navbar() {
