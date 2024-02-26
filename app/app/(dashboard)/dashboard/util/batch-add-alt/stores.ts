@@ -2,9 +2,14 @@
 
 import { create } from "zustand";
 
+export interface User {
+  id: number;
+  login: string;
+}
+
 interface State {
   errLogins: string[];
-  ids: string[];
+  users: User[];
   isChecking: boolean;
   isCommitting: boolean;
 }
@@ -15,13 +20,13 @@ interface Action {
 
 export const useBatchAddAltStore = create<State & Action>((set) => ({
   errLogins: [],
-  ids: [],
+  users: [],
   isChecking: false,
   isCommitting: false,
   clear: () => {
     set({
       errLogins: [],
-      ids: [],
+      users: [],
     });
   },
 }));

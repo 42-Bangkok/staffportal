@@ -46,6 +46,7 @@
     "embla-carousel-react": "^8.0.0-rc22",
     "husky": "^9.0.11",
     "ioredis": "^5.3.2",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.331.0",
     "next": "14.1.0",
     "next-auth": "^5.0.0-beta.4",
@@ -64,6 +65,7 @@
     "zustand": "^4.5.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.202",
     "@types/node": "^20.11.18",
     "@types/react": "^18",
     "@types/react-dom": "^18",

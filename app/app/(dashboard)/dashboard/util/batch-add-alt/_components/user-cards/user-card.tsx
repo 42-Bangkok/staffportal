@@ -39,7 +39,7 @@ export const UserCard = async ({ login }: { login: string }) => {
           </div>
         </CardContent>
       </Card>
-      <AddIdHandler {...{ id: user.id.toString() }} />
+      <AddIdHandler {...{ id: user.id, login }} />
     </>
   );
 };

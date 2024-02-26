@@ -1,6 +1,7 @@
 "use client";
 
 import { useBatchAddAltStore } from "../../stores";
+import _ from "lodash";
 
 export const AddErrloginHandler = ({ login }: { login: string }) => {
   useBatchAddAltStore.setState({
@@ -11,9 +12,11 @@ export const AddErrloginHandler = ({ login }: { login: string }) => {
   return null;
 };
 
-export const AddIdHandler = ({ id }: { id: string }) => {
+export const AddIdHandler = ({ id, login }: { id: number; login: string }) => {
+  let newUsersState = [...useBatchAddAltStore.getState().users, { id, login }];
+  newUsersState = _.uniqBy(newUsersState, "id");
   useBatchAddAltStore.setState({
-    ids: [...new Set([...useBatchAddAltStore.getState().ids, id])],
+    users: newUsersState,
   });
   return null;
 };

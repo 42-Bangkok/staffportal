@@ -19,7 +19,9 @@ import { useRouter } from "next/navigation";
 import { ILoginsForm } from "./types";
 import { useBatchAddAltStore } from "../../stores";
 import { Input } from "@/components/ui/input";
-import { batchAddAlt } from "./actions";
+import { toast } from "sonner";
+import { useState } from "react";
+import { addAlt } from "@/actions/intra/wallets";
 
 const FormSchema = z.object({
   logins: z.string(),
@@ -28,7 +30,8 @@ const FormSchema = z.object({
 
 export const LoginsForm = (props: ILoginsForm) => {
   const router = useRouter();
-  const { errLogins, ids, clear, isChecking, isCommitting } =
+  const [isPending, setIsPending] = useState(false);
+  const { errLogins, users, clear, isChecking, isCommitting } =
     useBatchAddAltStore();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -44,11 +47,25 @@ export const LoginsForm = (props: ILoginsForm) => {
     router.push(`/dashboard/util/batch-add-alt/?logins=${logins.join(",")}`);
   }
   async function onCommit() {
-    console.log("Commited");
-    // const { data, error } = await batchAddAlt({
-    //   ids: ids,
-    //   value: Number(form.getValues("value")),
-    // });
+    const value = Number(form.getValues("value"));
+    if (value === 0) {
+      toast.error("Why are you tring to add 0?");
+      return;
+    }
+    setIsPending(true);
+    for (const user of users) {
+      const { data, error } = await addAlt({
+        value: value,
+        user_id: user.id,
+        login: user.login,
+      });
+      if (error) {
+        toast.error(`Failed to add $Alt to ${user.login}`);
+      } else {
+        toast.success(`Added $Alt to ${user.login}`);
+      }
+    }
+    setIsPending(false);
   }
 
   return (
@@ -99,7 +116,8 @@ export const LoginsForm = (props: ILoginsForm) => {
         <div className="flex flex-col gap-2">
           <div>
             <p>
-              DEBUG: the following ids will be used to commit: {ids.join(", ")}
+              DEBUG: the following ids will be used to commit:{" "}
+              {JSON.stringify(users)}
             </p>
             {errLogins.length > 0 ? (
               <p className="text-red-500">
@@ -109,7 +127,11 @@ export const LoginsForm = (props: ILoginsForm) => {
             ) : null}
           </div>
           <div className="flex gap-2">
-            <Button className="w-32" type="submit" disabled={isChecking}>
+            <Button
+              className="w-32"
+              type="submit"
+              disabled={isChecking || isPending}
+            >
               Check users
             </Button>
             <Button
