@@ -29,6 +29,9 @@ const FormSchema = z.object({
 });
 
 export const LoginsForm = (props: ILoginsForm) => {
+  const logins = props["logins"]
+    ? [...new Set(props["logins"].split(" ").filter(Boolean))]
+    : [];
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const { errLogins, users, clear } = useBatchAddAltStore();
@@ -66,9 +69,8 @@ export const LoginsForm = (props: ILoginsForm) => {
     }
     setIsPending(false);
   }
-  const isChecking =
-    users.length !==
-    [...new Set(props["logins"].split(" ").filter(Boolean))].length;
+  const isChecking = users.length !== logins.length;
+  const isZeroLogin = logins.length === 0;
   return (
     <Form {...form}>
       <form
@@ -135,7 +137,8 @@ export const LoginsForm = (props: ILoginsForm) => {
                 form.formState.isSubmitting ||
                 errLogins.length > 0 ||
                 isPending ||
-                isChecking
+                isChecking ||
+                isZeroLogin
               }
               onClick={onCommit}
             >
