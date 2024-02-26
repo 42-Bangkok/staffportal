@@ -15,9 +15,9 @@ export const SearchInput = () => {
     }
   };
   return (
-    <div className="flex m-4 ml-0">
+    <div className="flex m-4 ml-0 w-1/3">
       <Input
-        className="rounded-r-none max-w-32"
+        className="rounded-r-none debug"
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search"
         name="search"

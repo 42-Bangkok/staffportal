@@ -16,19 +16,17 @@ const SIDEBAR_ITEMS = [
     title: "Snappy",
     href: "/dashboard/snappy",
   },
+  {
+    title: "Utils",
+    href: "/dashboard/util",
+  },
 ];
 
-interface SettingsLayoutProps {
-  children: React.ReactNode;
-}
-
-export default async function DashboardLayout({
-  children,
-}: SettingsLayoutProps) {
+export default async function Navbar() {
   const session = await auth();
   return (
     <div className="flex flex-row space-x-12 space-y-0">
-      <aside className="-mx-4 min-h-dvh bg-slate-100">
+      <aside className="min-h-dvh bg-slate-100">
         <div className="flex flex-col items-center justify-center p-4 gap-4">
           <Image
             src="/42bangkok-logo-right.svg"
@@ -40,7 +38,6 @@ export default async function DashboardLayout({
         </div>
         <SidebarNav items={SIDEBAR_ITEMS} className="pr-1" />
       </aside>
-      <div className="flex-1">{children}</div>
     </div>
   );
 }

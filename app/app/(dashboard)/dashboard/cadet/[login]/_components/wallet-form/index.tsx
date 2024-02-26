@@ -14,10 +14,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { addAlt } from "./actions";
 import { IWalletForm } from "./types";
 import { toast } from "sonner";
 import { useState } from "react";
+import { addAlt } from "@/actions/intra/wallets";
 const FormSchema = z.object({
   value: z.coerce.number().int(),
 });
@@ -76,7 +76,7 @@ export function WalletForm(props: IWalletForm) {
                   <Input
                     className="rounded-none min-w-[100px]"
                     type="number"
-                    step={100}
+                    step={50}
                     {...field}
                   />
                 </FormControl>
