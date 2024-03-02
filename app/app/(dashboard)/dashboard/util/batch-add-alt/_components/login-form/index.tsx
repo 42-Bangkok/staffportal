@@ -20,7 +20,7 @@ import { ILoginsForm } from "./types";
 import { useBatchAddAltStore } from "../../stores";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addAlt } from "@/actions/intra/wallets";
 
 const FormSchema = z.object({
@@ -35,6 +35,10 @@ export const LoginsForm = (props: ILoginsForm) => {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const { errLogins, users, clear } = useBatchAddAltStore();
+  useEffect(() => {
+    clear();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { logins: props.logins, value: 0 },
