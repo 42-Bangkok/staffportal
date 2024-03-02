@@ -10,21 +10,26 @@ export interface User {
 interface State {
   errLogins: string[];
   users: User[];
+  isChecking: boolean;
+  isCommitting: boolean;
 }
 
 interface Action {
   clear: () => void;
 }
 
-export const useBatchAddAltStore = create<State & Action>((set) => ({
+const initialState: State = {
   errLogins: [],
   users: [],
   isChecking: false,
   isCommitting: false,
+};
+
+export const useBatchAddAltStore = create<State & Action>((set) => ({
+  ...initialState,
   clear: () => {
     set({
-      errLogins: [],
-      users: [],
+      ...initialState,
     });
   },
 }));
