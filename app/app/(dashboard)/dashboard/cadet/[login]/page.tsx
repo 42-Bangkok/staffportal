@@ -4,6 +4,8 @@ import { JsonData } from "./_components/json-data";
 import { WalletForm } from "./_components/wallet-form";
 import { Separator } from "@/components/ui/separator";
 import { CircleUserIcon, MailIcon, UserIcon } from "lucide-react";
+import { MetaForm } from "./_components/meta-form";
+import { Suspense } from "react";
 
 export default async function Page({ params }: { params: { login: string } }) {
   const { login } = params;
@@ -44,6 +46,10 @@ export default async function Page({ params }: { params: { login: string } }) {
           </div>
         </div>
       </div>
+      <Separator className="mt-2 mb-2 w-2/3" />
+      <Suspense fallback={<MetaForm.Skeleton />}>
+        <MetaForm login={login} />
+      </Suspense>
       <Separator className="mt-2 mb-2 w-2/3" />
       <div className="flex flex-col gap-4">
         <WalletForm {...walletFormProps} />
