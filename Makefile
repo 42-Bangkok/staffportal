@@ -1,3 +1,6 @@
+include app/.env
+export $(shell sed 's/=.*//' app/.env)
+
 # Tag & trigger github actions to build and push docker image
 release:
 	ver=$(shell date +%Y.%m.%d.%s) &&\
@@ -8,3 +11,5 @@ test: test-build
 test-build:
 	docker build -t staffportal:latest .
 	docker rmi staffportal:latest
+api-schema:
+	npx -y openapi-typescript ${GATEWAY_URL}/api/openapi.json -o schemas/gateway-api-schema.d.ts 
