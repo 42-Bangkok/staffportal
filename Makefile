@@ -12,4 +12,4 @@ test-build:
 	docker build -t staffportal:latest .
 	docker rmi staffportal:latest
 api-schema:
-	npx -y openapi-typescript ${GATEWAY_URL}/api/openapi.json -o schemas/gateway-api-schema.d.ts 
+	cd app && npx -y openapi-typescript ${GATEWAY_URL}/api/openapi.json -o schemas/gateway-api-schema.d.ts 
