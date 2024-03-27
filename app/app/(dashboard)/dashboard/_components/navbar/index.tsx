@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { auth } from "@/auth";
 import { SidebarNav } from "./sidebar-nav";
+import { ThemeToggle } from "./theme-togle";
 
 const SIDEBAR_ITEMS = [
   {
@@ -26,7 +27,10 @@ export default async function Navbar() {
   const session = await auth();
   return (
     <div className="flex flex-row space-x-12 space-y-0">
-      <aside className="min-h-dvh bg-slate-100">
+      <aside className="min-h-dvh bg-secondary">
+        <div className="absolute p-2 right-0">
+          <ThemeToggle />
+        </div>
         <div className="flex flex-col items-center justify-center p-4 gap-4">
           <Image
             src="/42bangkok-logo-right.svg"

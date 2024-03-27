@@ -1,6 +1,8 @@
 import { createGatewayClient } from "@/lib/gateway/client";
 import { patchCadetMeta } from "./actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function Page() {
   const client = createGatewayClient();
   const { data, error } = await client.GET("/api/data/cadetmeta/{login}/", {
