@@ -394,19 +394,15 @@ export interface components {
     };
     /** PeriodicTaskSchema */
     PeriodicTaskSchema: {
-      /** ID */
-      id?: number | null;
+      /** Enabled */
+      enabled: boolean;
+      /** Id */
+      id: number;
       /**
        * Name
        * @description Short Description For This Task
        */
       name: string;
-      /**
-       * Enabled
-       * @description Set to False to disable the schedule
-       * @default true
-       */
-      enabled?: boolean;
     };
     /** TasksGetOut */
     TasksGetOut: {
@@ -488,7 +484,7 @@ export interface components {
       name?: string;
       /** Enabled */
       enabled?: boolean;
-      cron_schedule: components["schemas"]["CronScheduleSchema"];
+      cron_schedule?: components["schemas"]["CronScheduleSchema"] | null;
       kwargs?: components["schemas"]["CreateSnappyKwargs"];
     };
     /** TaskGetOut */
