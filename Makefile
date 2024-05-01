@@ -13,3 +13,6 @@ test-build:
 	docker rmi staffportal:latest
 api-schema:
 	cd app && npx -y openapi-typescript ${GATEWAY_URL}/api/openapi.json -o schemas/gateway-api-schema.d.ts 
+bump:
+	cd app && npm i next@latest react@latest react-dom@latest eslint-config-next@latest
+	cd app && npm update
