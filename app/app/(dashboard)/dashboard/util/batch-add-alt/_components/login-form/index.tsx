@@ -70,6 +70,7 @@ export const LoginsForm = (props: ILoginsForm) => {
       } else {
         toast.success(`Added $Alt to ${user.login}`);
       }
+      await new Promise((resolve) => setTimeout(resolve, 100)); // Simple way to prevent rate limit
     }
     setIsPending(false);
   }
