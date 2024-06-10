@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import _ from "lodash";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,11 +23,14 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { addAlt } from "@/actions/intra/wallets";
+import { SAResponse } from "@/types/sa-response";
 
 const FormSchema = z.object({
   logins: z.string(),
   value: z.coerce.number().int(),
 });
+
+let throttledAddAlt = _.throttle(addAlt, 1000);
 
 export const LoginsForm = (props: ILoginsForm) => {
   const logins = props["logins"]
@@ -60,17 +64,16 @@ export const LoginsForm = (props: ILoginsForm) => {
     }
     setIsPending(true);
     for (const user of users) {
-      const { data, error } = await addAlt({
+      const { data, error } = (await throttledAddAlt({
         value: value,
         user_id: user.id,
         login: user.login,
-      });
+      })) as SAResponse<Boolean>;
       if (error) {
         toast.error(`Failed to add $Alt to ${user.login}`);
       } else {
         toast.success(`Added $Alt to ${user.login}`);
       }
-      await new Promise((resolve) => setTimeout(resolve, 100)); // Simple way to prevent rate limit
     }
     setIsPending(false);
   }
